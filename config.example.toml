@@ -1,11 +1,14 @@
+# General configuration
 host = "0.0.0.0"
 port = "8000"
 
-
+# User mapping allows you to map a username from one app to another. It works both ways, so you only have to define
+# one mapping
 user_mapping = [
     {from = "marcel", to = "marcel123"},
 ]
 
+# Information for a Jellyfin instance
 [jellyfin]
 name = "jellyfin"
 url = "https://localhost:8096"
