@@ -1,7 +1,6 @@
 package jellyfin
 
 import (
-	"errors"
 	"fmt"
 	"gobble/pkg"
 	"gobble/pkg/common"
@@ -25,7 +24,7 @@ type Config struct {
 	Client *http.Client
 }
 
-// New creates the provided config into a new Jellyfin app
+// New creates a new Jellyfin app from the provided config
 func New(config *Config) *App {
 	if config.Client == nil {
 		config.Client = &http.Client{Timeout: 30 * time.Second}
@@ -53,7 +52,7 @@ func (j *App) GetUsers() ([]users.User, error) {
 	}
 
 	if res.StatusCode/100 != 2 {
-		return nil, errors.New(fmt.Sprintf("request to %q unsuccessful: %d %s", endpoint, res.StatusCode, res.Status))
+		return nil, pkg.ErrorFromResponse(res)
 	}
 
 	var content []User
@@ -77,8 +76,9 @@ func (j *App) GetSystemInfo() (*common.SystemInfo, error) {
 	res, err := j.config.Client.Do(req)
 
 	if res.StatusCode/100 != 2 {
-		return nil, fmt.Errorf("request to %q unsuccessful: %d %s", endpoint, res.StatusCode, res.Status)
+		return nil, pkg.ErrorFromResponse(res)
 	}
+
 	var info SystemInfo
 
 	if err = pkg.ReadResponseJSON(res, &info); err != nil {

@@ -6,7 +6,6 @@ type SystemInfo struct {
 	Id              string `json:"id"`
 	Name            string `json:"name"`
 	Version         string `json:"version"`
-	ProductName     string `json:"product_name"`
 	OperatingSystem string `json:"operating_system"`
 }
 
