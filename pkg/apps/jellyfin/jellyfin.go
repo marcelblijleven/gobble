@@ -13,32 +13,32 @@ import (
 	"time"
 )
 
-// Service represents a Jellyfin media service
-type Service struct {
+// App represents a Jellyfin media app
+type App struct {
 	config Config
 }
 
-// Config represents a config file entry for a Jellyfin service
+// Config represents a config file entry for a Jellyfin app
 type Config struct {
 	URL    string `json:"url" toml:"url"`
 	Token  string `json:"token" toml:"token"`
 	Client *http.Client
 }
 
-// New creates the provided config into a new Jellyfin service
-func New(config *Config) *Service {
+// New creates the provided config into a new Jellyfin app
+func New(config *Config) *App {
 	if config.Client == nil {
 		config.Client = &http.Client{Timeout: 30 * time.Second}
 	}
 
-	return &Service{
+	return &App{
 		config: *config,
 	}
 }
 
-// GetUsers retrieves all users from the Jellyfin service,
+// GetUsers retrieves all users from the Jellyfin app,
 // mapped to a normalized User object
-func (j *Service) GetUsers() ([]users.User, error) {
+func (j *App) GetUsers() ([]users.User, error) {
 	endpoint := j.getAPIUrl("/Users")
 	req, err := j.getRequest("GET", endpoint, nil)
 
@@ -66,7 +66,7 @@ func (j *Service) GetUsers() ([]users.User, error) {
 }
 
 // GetSystemInfo retrieves system info from the Jellyfin API
-func (j *Service) GetSystemInfo() (*common.SystemInfo, error) {
+func (j *App) GetSystemInfo() (*common.SystemInfo, error) {
 	endpoint := j.getAPIUrl("/System/Info")
 	req, err := j.getRequest("GET", endpoint, nil)
 
@@ -90,7 +90,7 @@ func (j *Service) GetSystemInfo() (*common.SystemInfo, error) {
 
 // getAPIUrl builds a URL for a Jellyfin endpoint using the
 // configured base url
-func (j *Service) getAPIUrl(elem ...string) string {
+func (j *App) getAPIUrl(elem ...string) string {
 	path, err := url.JoinPath(j.config.URL, elem...)
 
 	if err != nil {
@@ -103,7 +103,7 @@ func (j *Service) getAPIUrl(elem ...string) string {
 
 // getRequest is a helper method which adds the necessary headers
 // to the request made to Jellyfin
-func (j *Service) getRequest(method, endpoint string, body io.Reader) (*http.Request, error) {
+func (j *App) getRequest(method, endpoint string, body io.Reader) (*http.Request, error) {
 	r, err := http.NewRequest(method, endpoint, body)
 
 	if err != nil {
