@@ -1,0 +1,15 @@
+host = "0.0.0.0"
+port = "8000"
+
+
+user_mapping = [
+    {from = "marcel", to = "marcel123"},
+]
+
+[jellyfin]
+name = "jellyfin"
+url = "https://localhost:8096"
+token = "c0ffee8f39fc486392bb68f16d69b4aa"
+timeout = 40
+interval = 900
+
