@@ -4,6 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/BurntSushi/toml"
+	"gobble/pkg/apps/jellyfin"
+	"gobble/pkg/apps/plex"
 	"gobble/pkg/users"
 )
 
@@ -25,9 +27,30 @@ type AdditionalConfig struct {
 // New creates a new Config with defaults
 func New() *Config {
 	return &Config{
-		Host:       "",
-		Port:       "",
-		Services:   &Services{},
+		Host: "",
+		Port: "",
+		Services: &Services{
+			Jellyfin: &JellyfinConfig{
+				Config: &jellyfin.Config{
+					URL:    "",
+					Token:  "",
+					Client: nil,
+				},
+				App:              nil,
+				AdditionalConfig: AdditionalConfig{},
+				SystemInfo:       nil,
+			},
+			Plex: &PlexConfig{
+				Config: &plex.Config{
+					URL:    "",
+					Token:  "",
+					Client: nil,
+				},
+				App:              nil,
+				AdditionalConfig: AdditionalConfig{},
+				SystemInfo:       nil,
+			},
+		},
 		UserConfig: &users.UserConfig{UserMappings: []users.UserMapping{}},
 	}
 }
