@@ -29,7 +29,6 @@ func convertSystemInfo(data SystemInfo) *common.SystemInfo {
 		Id:              data.Id,
 		Name:            data.ServerName,
 		Version:         data.Version,
-		ProductName:     data.ProductName,
 		OperatingSystem: data.OperatingSystem,
 	}
 }
