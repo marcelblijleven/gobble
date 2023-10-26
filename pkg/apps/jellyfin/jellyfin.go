@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"gobble/pkg"
+	"gobble/pkg/common"
 	"gobble/pkg/users"
 	"io"
 	"log"
@@ -14,20 +15,23 @@ import (
 
 // Service represents a Jellyfin media service
 type Service struct {
-	client *http.Client
 	config Config
 }
 
 // Config represents a config file entry for a Jellyfin service
 type Config struct {
-	URL   string `json:"url" toml:"url"`
-	Token string `json:"token" toml:"token"`
+	URL    string `json:"url" toml:"url"`
+	Token  string `json:"token" toml:"token"`
+	Client *http.Client
 }
 
 // New creates the provided config into a new Jellyfin service
 func New(config *Config) *Service {
+	if config.Client == nil {
+		config.Client = &http.Client{Timeout: 30 * time.Second}
+	}
+
 	return &Service{
-		client: &http.Client{Timeout: 30 * time.Second},
 		config: *config,
 	}
 }
@@ -42,7 +46,7 @@ func (j *Service) GetUsers() ([]users.User, error) {
 		return nil, err
 	}
 
-	res, err := j.client.Do(req)
+	res, err := j.config.Client.Do(req)
 
 	if err != nil {
 		return nil, err
@@ -61,7 +65,30 @@ func (j *Service) GetUsers() ([]users.User, error) {
 	return convertUsers(content), nil
 }
 
-// getAPIURL builds a URL for a Jellyfin endpoint using the
+// GetSystemInfo retrieves system info from the Jellyfin API
+func (j *Service) GetSystemInfo() (*common.SystemInfo, error) {
+	endpoint := j.getAPIUrl("/System/Info")
+	req, err := j.getRequest("GET", endpoint, nil)
+
+	if err != nil {
+		return nil, err
+	}
+
+	res, err := j.config.Client.Do(req)
+
+	if res.StatusCode/100 != 2 {
+		return nil, fmt.Errorf("request to %q unsuccessful: %d %s", endpoint, res.StatusCode, res.Status)
+	}
+	var info SystemInfo
+
+	if err = pkg.ReadResponseJSON(res, &info); err != nil {
+		return nil, err
+	}
+
+	return convertSystemInfo(info), nil
+}
+
+// getAPIUrl builds a URL for a Jellyfin endpoint using the
 // configured base url
 func (j *Service) getAPIUrl(elem ...string) string {
 	path, err := url.JoinPath(j.config.URL, elem...)
