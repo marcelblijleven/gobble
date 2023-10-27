@@ -37,7 +37,7 @@ func New(config *Config) *App {
 
 // GetUsers retrieves all users from the Jellyfin app,
 // mapped to a normalized User object
-func (j *App) GetUsers() ([]users.User, error) {
+func (j *App) GetUsers() ([]*users.User, error) {
 	endpoint := j.getAPIUrl("/Users")
 	req, err := j.getRequest("GET", endpoint, nil)
 
