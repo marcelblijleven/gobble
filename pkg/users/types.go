@@ -19,9 +19,9 @@ func (u User) GetIdentifier() string {
 	return fmt.Sprintf("%s:%s", u.Username, u.ServerID)
 }
 
-//func (u User) String() string {
-//	return fmt.Sprintf("user %q from service %s with server id %q", u.Username, u.ServerType, u.ServerID)
-//}
+func (u User) String() string {
+	return fmt.Sprintf("user %q from service %s with server id %q", u.Username, u.ServerType, u.ServerID)
+}
 
 // MatchedUser defines the match between two User objects
 type MatchedUser struct {
