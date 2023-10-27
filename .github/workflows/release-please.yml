@@ -18,3 +18,4 @@ jobs:
           release-type: go
           package-name: gobble
           token: ${{ secrets.PAT }}
+          command: release-pr
