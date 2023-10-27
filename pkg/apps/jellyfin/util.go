@@ -12,10 +12,13 @@ func convertUsers(data []User) []users.User {
 
 	for _, u := range data {
 		converted = append(converted, users.User{
-			ID:          u.Id,
-			Username:    u.Name,
-			Source:      "jellyfin",
-			MappedUsers: []users.User{},
+			ID:           u.ID,
+			Username:     u.Name,
+			MatchedUsers: nil,
+			Source: &users.Source{
+				ServerID:   u.ServerId,
+				ServerType: "jellyfin",
+			},
 		})
 	}
 

@@ -2,9 +2,9 @@ package plex
 
 import (
 	"fmt"
-	"gobble/pkg"
 	"gobble/pkg/common"
 	"gobble/pkg/users"
+	"gobble/pkg/util"
 	"io"
 	"log"
 	"net/http"
@@ -88,12 +88,12 @@ func (a *App) getServerIdentity() (*ServerIdentity, error) {
 	}
 
 	if res.StatusCode/100 != 2 {
-		return nil, pkg.ErrorFromResponse(res)
+		return nil, util.ErrorFromResponse(res)
 	}
 
 	var identity ServerIdentity
 
-	if err = pkg.ReadResponseJSON(res, &identity); err != nil {
+	if err = util.ReadResponseJSON(res, &identity); err != nil {
 		return nil, err
 	}
 
@@ -116,12 +116,12 @@ func (a *App) getServerCapabilities() (*ServerCapabilities, error) {
 	}
 
 	if res.StatusCode/100 != 2 {
-		return nil, pkg.ErrorFromResponse(res)
+		return nil, util.ErrorFromResponse(res)
 	}
 
 	var caps ServerCapabilities
 
-	if err = pkg.ReadResponseJSON(res, &caps); err != nil {
+	if err = util.ReadResponseJSON(res, &caps); err != nil {
 		return nil, err
 	}
 
@@ -131,6 +131,12 @@ func (a *App) getServerCapabilities() (*ServerCapabilities, error) {
 // getMe calls the /v2/user endpoint to retrieve the user the Plex token belongs to
 func (a *App) getMe() (users.User, error) {
 	var u users.User
+
+	identity, err := a.getServerIdentity()
+
+	if err != nil {
+		return u, err
+	}
 
 	endpoint := a.getPlexAPIUrl("/user")
 	req, err := a.getRequest("GET", endpoint, nil)
@@ -146,16 +152,16 @@ func (a *App) getMe() (users.User, error) {
 	}
 
 	if res.StatusCode/100 != 2 {
-		return u, pkg.ErrorFromResponse(res)
+		return u, util.ErrorFromResponse(res)
 	}
 
 	var response User
 
-	if err = pkg.ReadResponseJSON(res, &response); err != nil {
+	if err = util.ReadResponseJSON(res, &response); err != nil {
 		return u, err
 	}
 
-	return plexUserToUser(response), nil
+	return plexUserToUser(response, identity.MediaContainer.MachineIdentifier), nil
 }
 
 func (a *App) getUsers() ([]users.User, error) {
@@ -173,12 +179,12 @@ func (a *App) getUsers() ([]users.User, error) {
 	}
 
 	if res.StatusCode/100 != 2 {
-		return nil, pkg.ErrorFromResponse(res)
+		return nil, util.ErrorFromResponse(res)
 	}
 
 	var externalUsers ExternalUsers
 
-	if err = pkg.ReadResponseJSON(res, &externalUsers); err != nil {
+	if err = util.ReadResponseJSON(res, &externalUsers); err != nil {
 		return nil, err
 	}
 
