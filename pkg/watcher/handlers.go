@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"gobble/pkg/tasks"
 	"net/http"
 )
 
@@ -13,22 +12,25 @@ func (w *Watcher) getHandler() *chi.Mux {
 	r.Use(middleware.Heartbeat("/healthcheck"))
 
 	r.Get("/", func(writer http.ResponseWriter, request *http.Request) {
-		writer.Write([]byte("Gobble 🦃"))
+		writer.Write([]byte("Gobble 🦃")) // goli
 	})
 
-	r.Get("/users/update", updateUsers(w))
+	r.Get("/users/", getUsersHandler(w))
 
 	return r
 }
 
-func updateUsers(w *Watcher) func(http.ResponseWriter, *http.Request) {
+func getUsersHandler(w *Watcher) func(http.ResponseWriter, *http.Request) {
 	return func(writer http.ResponseWriter, request *http.Request) {
-		u, err := tasks.GetUsers(w.Config)
+		b, err := json.MarshalIndent(w.Users, "", "  ")
 
 		if err != nil {
+			writer.WriteHeader(http.StatusInternalServerError)
 			writer.Write([]byte(err.Error()))
+			return
 		}
-		e := json.NewEncoder(writer)
-		e.Encode(u)
+
+		writer.WriteHeader(http.StatusOK)
+		writer.Write(b)
 	}
 }

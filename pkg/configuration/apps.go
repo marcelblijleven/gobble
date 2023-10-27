@@ -1,6 +1,7 @@
 package configuration
 
 import (
+	"gobble/pkg/apps"
 	"gobble/pkg/apps/jellyfin"
 	"gobble/pkg/apps/plex"
 	"gobble/pkg/common"
@@ -12,6 +13,7 @@ import (
 type AppConfig interface {
 	Setup()
 	Enabled() bool
+	GetApp() apps.App
 }
 
 type JellyfinConfig struct {
@@ -73,6 +75,11 @@ func (c *JellyfinConfig) Enabled() bool {
 	return enabled
 }
 
+// GetApp returns the App form the AppConfig
+func (c *JellyfinConfig) GetApp() apps.App {
+	return c.App
+}
+
 // Setup configures a Jellyfin app
 func (c *PlexConfig) Setup() {
 	if c.Timeout == 0 {
@@ -116,4 +123,9 @@ func (c *PlexConfig) Enabled() bool {
 	}
 
 	return enabled
+}
+
+// GetApp returns the App form the AppConfig
+func (c *PlexConfig) GetApp() apps.App {
+	return c.App
 }

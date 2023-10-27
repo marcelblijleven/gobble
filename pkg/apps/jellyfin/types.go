@@ -7,7 +7,7 @@ type User struct {
 	Name                      string        `json:"Name"`
 	ServerId                  string        `json:"ServerId"`
 	ServerName                string        `json:"ServerName"`
-	Id                        string        `json:"Id"`
+	ID                        string        `json:"Id"`
 	PrimaryImageTag           string        `json:"PrimaryImageTag"`
 	HasPassword               bool          `json:"HasPassword"`
 	HasConfiguredPassword     bool          `json:"HasConfiguredPassword"`

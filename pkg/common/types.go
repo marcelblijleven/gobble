@@ -3,7 +3,7 @@ package common
 import "fmt"
 
 type SystemInfo struct {
-	Id              string `json:"id"`
+	ID              string `json:"id"`
 	Name            string `json:"name"`
 	Version         string `json:"version"`
 	OperatingSystem string `json:"operating_system"`

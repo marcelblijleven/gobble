@@ -4,6 +4,7 @@ import (
 	"context"
 	flag "github.com/spf13/pflag"
 	"gobble/pkg/configuration"
+	"gobble/pkg/users"
 	"log"
 	"net/http"
 	"os"
@@ -13,9 +14,11 @@ import (
 
 // Watcher keeps track of all the things
 type Watcher struct {
-	Config *configuration.Config
-	Flags  *configuration.Flags
-	server *http.Server
+	Config             *configuration.Config
+	Flags              *configuration.Flags
+	RegisteredServices map[string]configuration.AppConfig
+	Users              []*users.User
+	server             *http.Server
 	// sigkill causes immediate program termination, cannot be handled or ignored
 	sigkill chan os.Signal
 	// sighup signal is sent to the process when the controlling terminal is closed
@@ -43,12 +46,15 @@ func Run() error {
 
 	// Set up Watcher with some default values
 	watcher := &Watcher{
-		Config:  cfg,
-		Flags:   flags,
-		sigkill: make(chan os.Signal, 1),
-		sighup:  make(chan os.Signal, 1),
-		server:  &http.Server{},
+		Config:             cfg,
+		Flags:              flags,
+		RegisteredServices: map[string]configuration.AppConfig{},
+		sigkill:            make(chan os.Signal, 1),
+		sighup:             make(chan os.Signal, 1),
+		server:             &http.Server{},
 	}
+
+	watcher.registerApps()
 
 	ctx := context.Background()
 	return watcher.start(ctx)
@@ -60,8 +66,10 @@ func (w *Watcher) start(ctx context.Context) error {
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
+	if err := w.initializeUsers(); err != nil {
+		return err
+	}
 	go w.startServer()
-	w.checkUserMappings()
 
 	// Channel for catching ctrl+c
 	c := make(chan os.Signal, 1)
@@ -83,9 +91,13 @@ func (w *Watcher) stop(ctx context.Context) error {
 	return w.stopServer(ctx)
 }
 
-func (w *Watcher) checkUserMappings() {
-	for _, m := range w.Config.UserMappings {
-		// TODO: actually do something with these user mappings
-		log.Println(m.String())
+// registerApps creates a map with server id as key and the AppConfig as value
+func (w *Watcher) registerApps() {
+	for _, j := range w.Config.Services.Jellyfin {
+		w.RegisteredServices[j.SystemInfo.ID] = j
+	}
+
+	for _, p := range w.Config.Services.Plex {
+		w.RegisteredServices[p.SystemInfo.ID] = p
 	}
 }

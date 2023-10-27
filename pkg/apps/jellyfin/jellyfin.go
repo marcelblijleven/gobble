@@ -2,9 +2,9 @@ package jellyfin
 
 import (
 	"fmt"
-	"gobble/pkg"
 	"gobble/pkg/common"
 	"gobble/pkg/users"
+	"gobble/pkg/util"
 	"io"
 	"log"
 	"net/http"
@@ -37,7 +37,7 @@ func New(config *Config) *App {
 
 // GetUsers retrieves all users from the Jellyfin app,
 // mapped to a normalized User object
-func (j *App) GetUsers() ([]users.User, error) {
+func (j *App) GetUsers() ([]*users.User, error) {
 	endpoint := j.getAPIUrl("/Users")
 	req, err := j.getRequest("GET", endpoint, nil)
 
@@ -52,12 +52,12 @@ func (j *App) GetUsers() ([]users.User, error) {
 	}
 
 	if res.StatusCode/100 != 2 {
-		return nil, pkg.ErrorFromResponse(res)
+		return nil, util.ErrorFromResponse(res)
 	}
 
 	var content []User
 
-	if err = pkg.ReadResponseJSON(res, &content); err != nil {
+	if err = util.ReadResponseJSON(res, &content); err != nil {
 		return nil, err
 	}
 
@@ -76,12 +76,12 @@ func (j *App) GetSystemInfo() (*common.SystemInfo, error) {
 	res, err := j.config.Client.Do(req)
 
 	if res.StatusCode/100 != 2 {
-		return nil, pkg.ErrorFromResponse(res)
+		return nil, util.ErrorFromResponse(res)
 	}
 
 	var info SystemInfo
 
-	if err = pkg.ReadResponseJSON(res, &info); err != nil {
+	if err = util.ReadResponseJSON(res, &info); err != nil {
 		return nil, err
 	}
 
