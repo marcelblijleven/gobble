@@ -4,7 +4,7 @@ import "fmt"
 
 // UserConfig represents user related config file entries
 type UserConfig struct {
-	UserMappings []UserMapping `json:"user_mapping" toml:"user_mapping"`
+	UserMappings map[string]string `json:"user_mapping" toml:"user_mapping"`
 }
 
 // UserMapping is part of the UserConfig and allows usernames to be mapped between apps
