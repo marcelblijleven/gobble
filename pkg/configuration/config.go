@@ -4,8 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/BurntSushi/toml"
-	"gobble/pkg/apps/jellyfin"
-	"gobble/pkg/apps/plex"
 	"gobble/pkg/users"
 )
 
@@ -30,26 +28,8 @@ func New() *Config {
 		Host: "",
 		Port: "",
 		Services: &Services{
-			Jellyfin: &JellyfinConfig{
-				Config: &jellyfin.Config{
-					URL:    "",
-					Token:  "",
-					Client: nil,
-				},
-				App:              nil,
-				AdditionalConfig: AdditionalConfig{},
-				SystemInfo:       nil,
-			},
-			Plex: &PlexConfig{
-				Config: &plex.Config{
-					URL:    "",
-					Token:  "",
-					Client: nil,
-				},
-				App:              nil,
-				AdditionalConfig: AdditionalConfig{},
-				SystemInfo:       nil,
-			},
+			Jellyfin: []*JellyfinConfig{},
+			Plex:     []*PlexConfig{},
 		},
 		UserConfig: &users.UserConfig{UserMappings: []users.UserMapping{}},
 	}
