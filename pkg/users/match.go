@@ -5,16 +5,17 @@ import (
 	"log"
 )
 
-func MatchUsers(u []*User, m []UserMapping) error {
+// MatchUsers takes all users and username mapping and tries to match each username to
+// a username of another service. After finding a match, the User.ID, User.Username and Source
+// will be added to a MatchedUser struct
+func MatchUsers(u []*User, m map[string]string) error {
 	if len(u) == 1 {
 		return errors.New("only one user found, nothing to match or scrobble")
 	}
 
-	mapping := mapFromUserMapping(m)
-
 	for _, i := range u {
 		for _, j := range u {
-			mappedUsername := mapping[i.Username]
+			mappedUsername := m[i.Username]
 
 			if (i.Username == j.Username || mappedUsername != "" && mappedUsername == j.Username) && i.GetIdentifier() != j.GetIdentifier() {
 				i.MatchedUsers = append(i.MatchedUsers, MatchedUser{
@@ -28,15 +29,4 @@ func MatchUsers(u []*User, m []UserMapping) error {
 	}
 
 	return nil
-}
-
-func mapFromUserMapping(m []UserMapping) map[string]string {
-	mapping := map[string]string{}
-	for _, u := range m {
-		log.Println(u.String())
-		mapping[u.From] = u.To
-		mapping[u.To] = u.From
-	}
-
-	return mapping
 }

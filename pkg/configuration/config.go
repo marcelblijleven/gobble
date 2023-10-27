@@ -31,7 +31,7 @@ func New() *Config {
 			Jellyfin: []*JellyfinConfig{},
 			Plex:     []*PlexConfig{},
 		},
-		UserConfig: &users.UserConfig{UserMappings: []users.UserMapping{}},
+		UserConfig: &users.UserConfig{UserMappings: map[string]string{}},
 	}
 }
 
