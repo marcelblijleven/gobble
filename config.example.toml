@@ -8,11 +8,17 @@ user_mapping = [
     {from = "marcel", to = "marcel123"},
 ]
 
-# Information for a Jellyfin instance
-[jellyfin]
+# Information for Jellyfin instance(s)
+[[jellyfin]]
 name = "jellyfin"
 url = "https://localhost:8096"
 token = "c0ffee8f39fc486392bb68f16d69b4aa"
 timeout = 40
 interval = 900
 
+[[plex]]
+name = "plex"
+url = "https://plex.local.server.io"
+token = "kedkekekekekekekeke"
+timeout = 40
+interval = 900
