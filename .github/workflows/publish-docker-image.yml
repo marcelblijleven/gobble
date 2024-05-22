@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Log into registry
-      run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username marcelblijleven --password-stdin
+      run: echo ${{ secrets.PACKAGE_PAT }} | docker login ghcr.io --username marcelblijleven --password-stdin
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag ghcr.io/marcelblijleven/gobble:${{ github.ref_name }}
     - name: Push to registry
