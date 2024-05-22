@@ -1,0 +1,104 @@
+{
+  "event": "media.pause",
+  "user": true,
+  "owner": true,
+  "Account": {
+    "id": 1234567,
+    "thumb": "https://plex.tv/users/random-numbers/avatar?c=1234567890",
+    "title": "marcelblijleven"
+  },
+  "Server": {
+    "title": "My server",
+    "uuid": "aaaaaaaaaa045fafe9a8302b6021b458b3751530"
+  },
+  "Player": {
+    "local": true,
+    "publicAddress": "8.8.8.8",
+    "title": "Safari",
+    "uuid": "abcdefghijklmnop"
+  },
+  "Metadata": {
+    "librarySectionType": "show",
+    "ratingKey": "9479",
+    "key": "/library/metadata/9479",
+    "parentRatingKey": "9470",
+    "grandparentRatingKey": "7564",
+    "guid": "plex://episode/foo",
+    "parentGuid": "plex://season/bar",
+    "grandparentGuid": "plex://show/baz",
+    "grandparentSlug": "the-show-of-shows",
+    "type": "episode",
+    "title": "Bad Show",
+    "grandparentKey": "/library/metadata/1234",
+    "parentKey": "/library/metadata/5678",
+    "librarySectionTitle": "TV shows",
+    "librarySectionID": 2,
+    "librarySectionKey": "/library/sections/2",
+    "grandparentTitle": "Test Show: The Show",
+    "parentTitle": "Season 3",
+    "contentRating": "TV-PG",
+    "summary": "Desperate for tests, a show was created",
+    "index": 8,
+    "parentIndex": 3,
+    "audienceRating": 6.0,
+    "viewOffset": 600000,
+    "lastViewedAt": 1716411423,
+    "year": 2024,
+    "thumb": "/library/metadata/1234/thumb/12345",
+    "art": "/library/metadata/1234/art/12345",
+    "parentThumb": "/library/metadata/1234/thumb/12345",
+    "grandparentThumb": "/library/metadata/1234/thumb/12345",
+    "grandparentArt": "/library/metadata/1234/art/12345",
+    "grandparentTheme": "/library/metadata/1234/theme/12345",
+    "duration": 1680000,
+    "originallyAvailableAt": "2024-01-01",
+    "addedAt": 1712432601,
+    "updatedAt": 1712448208,
+    "audienceRatingImage": "themoviedb://image.rating",
+    "chapterSource": "media",
+    "Guid": [
+      {
+        "id": "imdb://tt1234"
+      },
+      {
+        "id": "tmdb://1234"
+      },
+      {
+        "id": "tvdb://1234"
+      }
+    ],
+    "Rating": [
+      {
+        "image": "themoviedb://image.rating",
+        "value": 6.0,
+        "type": "audience"
+      }
+    ],
+    "Director": [
+      {
+        "id": 1234,
+        "filter": "director=1234",
+        "tag": "Marcel Blijleven",
+        "tagKey": "123456789"
+      }
+    ],
+    "Writer": [
+      {
+        "id": 1234,
+        "filter": "director=1234",
+        "tag": "Marcel Blijleven",
+        "tagKey": "123456789"
+      }
+    ],
+    "Role": [
+      {
+        "id": 123,
+        "filter": "actor=123",
+        "tag": "Marcel Blijleven",
+        "tagKey": "123456789",
+        "role": "The Hero",
+        "thumb": "https://metadata-static.plex.tv/1/people/foo.jpg"
+      }
+    ]
+  }
+}
