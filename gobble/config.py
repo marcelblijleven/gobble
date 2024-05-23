@@ -1,6 +1,6 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from gobble.lib.plexapi.config import PlexSettings
+from gobble.plexapi.config import PlexSettings
 
 
 class GobbleSettings(BaseSettings):

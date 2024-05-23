@@ -4,7 +4,7 @@ from typing import Annotated
 from fastapi import APIRouter, Form
 from pydantic import ValidationError
 
-from gobble.lib.plexapi.client import plex_client
+from gobble.plexapi.client import plex_client
 from gobble.routes.v1.plex import models
 from gobble.routes.v1.plex.models import WebhookEventModel
 

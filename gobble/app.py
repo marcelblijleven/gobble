@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from gobble.lib.plexapi.client import plex_client
+from gobble.plexapi.client import plex_client
 from gobble.routes.v1.plex.router import plex_router
 
 
