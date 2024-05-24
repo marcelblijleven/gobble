@@ -35,4 +35,3 @@ class WebhookEventModel(BaseModel):
     server: ServerModel = Field(..., alias="Server")
     player: PlayerModel = Field(..., alias="Player")
     metadata: MetadataModel = Field(..., alias="Metadata")
-

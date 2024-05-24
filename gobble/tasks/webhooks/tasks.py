@@ -8,7 +8,9 @@ from gobble.tasks.webhooks.registry import webhook_task_registry
 logger = logging.getLogger(__name__)
 
 
-async def call_registered_webhook_tasks_for_event(event: WebhookEventModel, event_type: EventType) -> None:
+async def call_registered_webhook_tasks_for_event(
+    event: WebhookEventModel, event_type: EventType
+) -> None:
     """
     Will create a task group for the registered callbacks that belong to the provided event type.
 

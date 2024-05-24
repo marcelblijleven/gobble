@@ -16,5 +16,6 @@ async def lifespan(app_: FastAPI):
     yield
     ...
 
+
 app = FastAPI(lifespan=lifespan)
 app.include_router(plex_router)

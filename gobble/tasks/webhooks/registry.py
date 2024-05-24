@@ -10,13 +10,16 @@ C: TypeAlias = Coroutine[Any, Any, R]
 webhook_task_registry: dict[EventType, list[Callable[P, C]]] = {}
 
 
-def register_webhook_task(*event_type: EventType) -> Callable[[Callable[P, C]], Callable[P, C]]:
+def register_webhook_task(
+    *event_type: EventType,
+) -> Callable[[Callable[P, C]], Callable[P, C]]:
     """
     Registers a task to be called
 
     :param event_type: the webhook event type
     :return:
     """
+
     def register(func: Callable[P, C]) -> Callable[P, C]:
         for type_ in event_type:
             if type_ in webhook_task_registry:
