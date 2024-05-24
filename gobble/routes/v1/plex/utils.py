@@ -20,15 +20,16 @@ def get_event_type(event: WebhookEventModel) -> EventType:
     match event.event:
         case "media.pause":
             return EventType.MediaPause
-        case "media.":
+        case "media.play":
             return EventType.MediaPlay
-        case "media.":
+        case "media.rate":
             return EventType.MediaRate
-        case "media.":
+        case "media.resume":
             return EventType.MediaResume
-        case "media.":
+        case "media.scrobble":
             return EventType.MediaScrobble
-        case "media.":
+        case "media.stop":
             return EventType.MediaStop
 
-    raise UnsupportedEventTypeException(event.event, "Plex")
+    server_ident = f"Plex ({event.server.title})"
+    raise UnsupportedEventTypeException(event.event, server_ident)
