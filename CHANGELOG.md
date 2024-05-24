@@ -1,3 +1,9 @@
+## 0.3.0.dev1 (2024-05-24)
+
+### Feat
+
+- **tasks**: call tasks in task registry on webhook event
+
 ## 0.2.1 (2024-05-23)
 
 ### Fix
