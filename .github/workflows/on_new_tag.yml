@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: On new tag
 
 permissions:
   packages: write
@@ -8,7 +8,7 @@ on:
     tags: [ "*" ]
 
 jobs:
-  build:
+  build-and-publish-docker-image:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -18,3 +18,12 @@ jobs:
       run: docker build . --file Dockerfile --tag ghcr.io/marcelblijleven/gobble:${{ github.ref_name }}
     - name: Push to registry
       run: docker push ghcr.io/marcelblijleven/gobble:${{ github.ref_name }}
+  create-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v3
+    - uses: ncipollo/release-action@v1
+      with:
+        name: Release ${{ github.ref_name }}
