@@ -1,0 +1,15 @@
+---
+type: 1
+title: Gobble
+name: gobble
+description: yacht template for Gobble
+image: ghcr.io/marcelblijleven/gobble:0.3.0.dev1
+platform: linux
+restart_policy: unless-stopped
+ports:
+  - 9100:8000/tcp
+env:
+  - name: PLEX__SERVER
+    label: Plex server
+  - name: PLEX__TOKEN
+    label: Plex token
