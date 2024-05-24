@@ -1,0 +1,25 @@
+name: Quality checks
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install Poetry
+      uses: pipx install poetry
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        cache: 'poetry'
+    - name: Install dependencies
+      run: poetry install --with=dev
+    - name: Run ruff
+      run: ruff check
+    - name: Run formatter check
+      run: ruff format --check
+    - name: Run pytest
+      run: pytest tests
