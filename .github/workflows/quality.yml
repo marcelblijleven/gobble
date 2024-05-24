@@ -4,7 +4,7 @@ on:
   pull_request:
 
 jobs:
-  build:
+  quality:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -24,4 +24,4 @@ jobs:
     - name: Run pytest
       run: poetry run pytest tests
     - name: Run mypy
-      run: poetry run mypy src
+      run: poetry run mypy gobble
