@@ -16,7 +16,6 @@ httpx = "^0.27.0"
 pydantic-settings = "^2.2.1"
 python-multipart = "^0.0.9"
 
-
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.2.1"
 commitizen = "^3.26.0"
@@ -29,6 +28,11 @@ ruff = "^0.4.5"
 version_provider = "poetry"
 version_files = ["gobble/__init__.py"]
 update_changelog_on_bump = true
+
+[tool.mypy]
+plugins = [
+    "pydantic.mypy"
+]
 
 [tool.pytest_env]
 PLEX__SERVER_URL = "http://localhost:34000"
