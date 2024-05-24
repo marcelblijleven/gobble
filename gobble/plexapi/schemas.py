@@ -65,7 +65,9 @@ class ServerIdentityMediaContainer(BaseModel):
 
 
 class ServerCapabilitiesResponse(BaseModel):
-    media_container: ServerCapabilitiesMediaContainer = Field(..., alias="MediaContainer")
+    media_container: ServerCapabilitiesMediaContainer = Field(
+        ..., alias="MediaContainer"
+    )
 
 
 class ServerIdentityResponse(BaseModel):

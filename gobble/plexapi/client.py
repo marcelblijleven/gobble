@@ -42,10 +42,14 @@ class PlexClient:
         self._server_identity = server_identity
         return self._server_identity
 
-    async def _make_async_request(self, url: str, *, method: HttpMethod, **kwargs) -> Response:
+    async def _make_async_request(
+        self, url: str, *, method: HttpMethod, **kwargs
+    ) -> Response:
         async with httpx.AsyncClient() as client:
             headers = self._default_headers | kwargs.pop("headers", {})
-            resp = await client.request(method=method.value, url=url, headers=headers, **kwargs)
+            resp = await client.request(
+                method=method.value, url=url, headers=headers, **kwargs
+            )
             resp.raise_for_status()
 
         return resp
@@ -53,7 +57,9 @@ class PlexClient:
     def _make_sync_request(self, url: str, *, method: HttpMethod, **kwargs) -> Response:
         with httpx.Client() as client:
             headers = self._default_headers | kwargs.pop("headers", {})
-            resp = client.request(method=method.value, url=url, headers=headers, **kwargs)
+            resp = client.request(
+                method=method.value, url=url, headers=headers, **kwargs
+            )
             resp.raise_for_status()
 
         return resp
