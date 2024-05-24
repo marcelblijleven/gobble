@@ -1,11 +1,8 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, AnyHttpUrl, IPvAnyAddress, ConfigDict
 
 
 class VersionResponseModel(BaseModel):
     version: str
-
-
-from pydantic import BaseModel, Field, AnyHttpUrl, IPvAnyAddress, ConfigDict
 
 
 class AccountModel(BaseModel):
