@@ -1,3 +1,9 @@
+## 0.3.0.dev2 (2024-05-24)
+
+### Fix
+
+- **plex**: add missing webhook events
+
 ## 0.3.0.dev1 (2024-05-24)
 
 ### Feat
