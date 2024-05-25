@@ -3,9 +3,8 @@ from enum import Enum
 import httpx
 from httpx import Response
 
-from gobble.config import settings
-from gobble.plexapi.config import PlexSettings
-from gobble.plexapi.schemas import ServerIdentityResponse, ServerCapabilitiesResponse
+from gobble.plex.api.schemas import ServerCapabilitiesResponse, ServerIdentityResponse
+from gobble.plex.config import PlexSettings
 
 
 class HttpMethod(Enum):
@@ -68,6 +67,3 @@ class PlexClient:
     def version(self) -> str:
         server_identity = self.get_server_identity_sync()
         return server_identity.media_container.version
-
-
-plex_client = PlexClient(plex_settings=settings.plex)

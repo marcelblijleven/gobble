@@ -1,8 +1,8 @@
-from pydantic import BaseModel, Field, AnyHttpUrl, IPvAnyAddress, ConfigDict
+from pydantic import AnyHttpUrl, BaseModel, ConfigDict, Field, IPvAnyAddress, RootModel
 
 
-class VersionResponseModel(BaseModel):
-    version: str
+class VersionResponseModel(RootModel):
+    root: dict[str, str]
 
 
 class AccountModel(BaseModel):

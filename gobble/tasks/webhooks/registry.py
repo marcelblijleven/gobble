@@ -1,7 +1,6 @@
-from typing import Callable, Any, ParamSpec, TypeVar, Coroutine, TypeAlias
+from typing import Any, Callable, Coroutine, ParamSpec, TypeAlias, TypeVar
 
 from gobble.tasks.webhooks.event_types import EventType
-
 
 P = ParamSpec("P")
 R = TypeVar("R")

@@ -2,11 +2,12 @@ import logging
 from functools import partial
 from typing import Annotated
 
-from fastapi import APIRouter, Form, BackgroundTasks, status
+from fastapi import APIRouter, BackgroundTasks, Form, Request, status
 from pydantic import ValidationError
 
 from gobble.exceptions import UnsupportedEventTypeException
-from gobble.plexapi.client import plex_client
+from gobble.plex.server import PlexServer
+from gobble.protocols import MediaServer
 from gobble.routes.v1.plex import models
 from gobble.routes.v1.plex.models import WebhookEventModel
 from gobble.routes.v1.plex.utils import get_event_type
@@ -17,8 +18,15 @@ plex_router = APIRouter(prefix="/plex", tags=["Plex"])
 
 
 @plex_router.get("/version", response_model=models.VersionResponseModel)
-async def get_plex_version():
-    return {"version": plex_client.version}
+async def get_plex_version(request: Request):
+    media_servers: dict[str, MediaServer] = request.state.media_servers
+    versions: dict[str, str] = {}
+
+    for server in media_servers.values():
+        if isinstance(server, PlexServer):
+            versions[server.name] = server.version
+
+    return versions
 
 
 @plex_router.post("/webhook", status_code=status.HTTP_200_OK)
