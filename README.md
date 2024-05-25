@@ -9,6 +9,8 @@ it does now is log the webhook event.
 
 Upcoming:
 * Call Discord / Slack webhook
-* Multiple Plex server support
-* Better settings management
 * Syncing between Jellyfin and Plex
+
+## Configuration
+
+Configuration is done through a `gobble.yaml` file. See `gobble.example.yaml` for an example.
