@@ -1,19 +1,22 @@
-import logging
+import logging.config
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from gobble.plexapi.client import plex_client
+from gobble.config import settings
+from gobble.logging_config import LOGGING_CONFIG
 from gobble.routes.v1.plex.router import plex_router
+from gobble.utils import identify_servers
+
+logging.config.dictConfig(LOGGING_CONFIG)
 
 
 @asynccontextmanager
 async def lifespan(app_: FastAPI):
-    logging.basicConfig(level=logging.INFO)
-    plex_server_identity = await plex_client.get_server_identity()
-    plex_server_capabilities = await plex_client.get_server_capabilities()
-    print(plex_server_capabilities, plex_server_identity)
-    yield
+    media_servers = await identify_servers(settings)
+
+    yield {"media_servers": media_servers}
+
     ...
 
 
