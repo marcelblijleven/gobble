@@ -1,3 +1,9 @@
+## 0.4.0 (2024-05-25)
+
+### Feat
+
+- improve config, allow for multiple Plex servers (#3)
+
 ## 0.3.0 (2024-05-24)
 
 ### Feat
