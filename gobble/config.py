@@ -7,12 +7,16 @@ from pydantic_settings import (
     YamlConfigSettingsSource,
 )
 
+from gobble.discord.config import DiscordSettings
 from gobble.plex.config import PlexSettings
 
 
 class Settings(BaseSettings):
     plex: list[PlexSettings] | None = Field(
         None, description="Settings for one or more Plex servers"
+    )
+    discord: list[DiscordSettings] | None = Field(
+        None, description="Settings for one or more Discord webhooks"
     )
 
     model_config = SettingsConfigDict(yaml_file="gobble.yaml")
