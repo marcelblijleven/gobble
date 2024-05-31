@@ -3,12 +3,14 @@ plex:
     server_url: http://192.168.1.10:34000
     token: c0ffeee3u4u348883hqrstrt
 
-discord:
-  - webhook_url: https://discord.foo/foo
-    event_types:
-      - media_scrobble
-      - media_rate
-    username: Gobble
-  - webhook_url: https://discord.com/bar
-    event_types: all
-    username: Gobble
+tasks:
+  logger: true
+  discord:
+    - webhook_url: https://discord.foo/foo
+      event_types:
+        - media_scrobble
+        - media_rate
+      username: Gobble
+    - webhook_url: https://discord.com/bar
+      event_types: all
+      username: Gobble

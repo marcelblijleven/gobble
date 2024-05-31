@@ -9,9 +9,8 @@ from gobble.exceptions import UnsupportedEventTypeException
 from gobble.plex.server import PlexServer
 from gobble.protocols import MediaServer
 from gobble.routes.v1.plex import models
-from gobble.routes.v1.plex.models import WebhookEventModel
-from gobble.routes.v1.plex.utils import get_event_type
-from gobble.tasks.webhooks.tasks import call_registered_webhook_tasks_for_event
+from gobble.routes.v1.plex.models import PlexWebhookEventModel
+from gobble.webhooks.tasks.registry import call_registered_webhook_tasks_for_event
 
 logger = logging.getLogger(__name__)
 plex_router = APIRouter(prefix="/plex", tags=["Plex"])
@@ -32,8 +31,7 @@ async def get_plex_version(request: Request):
 @plex_router.post("/webhook", status_code=status.HTTP_200_OK)
 async def webhook(payload: Annotated[bytes, Form()], background_tasks: BackgroundTasks):
     try:
-        event = WebhookEventModel.model_validate_json(payload)
-        event_type = get_event_type(event)
+        event = PlexWebhookEventModel.model_validate_json(payload)
     except ValidationError as exc:
         logger.error(f"received unknown webhook data from Plex: {exc}")
         return
@@ -41,5 +39,6 @@ async def webhook(payload: Annotated[bytes, Form()], background_tasks: Backgroun
         logger.error(f"{exc}")
         return
 
-    task_for_event = partial(call_registered_webhook_tasks_for_event, event, event_type)
+    webhook_event = event.to_generic_webhook_event()
+    task_for_event = partial(call_registered_webhook_tasks_for_event, webhook_event)
     background_tasks.add_task(task_for_event)

@@ -1,9 +1,9 @@
 from gobble.exceptions import UnsupportedEventTypeException
-from gobble.routes.v1.plex.models import WebhookEventModel
-from gobble.tasks.webhooks.event_types import EventType
+from gobble.routes.v1.plex.models import PlexWebhookEventModel
+from gobble.webhooks.event_types import EventType
 
 
-def get_event_type(event: WebhookEventModel) -> EventType:
+def get_event_type(event: PlexWebhookEventModel) -> EventType:
     """
     Determines the event type for the provided event.
 
