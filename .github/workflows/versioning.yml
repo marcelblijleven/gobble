@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+env:
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
 jobs:
   bump_version:
@@ -17,6 +19,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          token: ${{ secrets.GH_TOKEN }}
       - id: cz
         name: Bump version and create changelog
         uses: commitizen-tools/commitizen-action@master
