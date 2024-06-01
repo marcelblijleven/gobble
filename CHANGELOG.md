@@ -1,3 +1,10 @@
+## 0.5.0 (2024-06-01)
+
+### Feat
+
+- **discord**: add discord webhooks and better settings
+- **discord**: add config for one or more discord webhook urls
+
 ## 0.4.0 (2024-05-25)
 
 ### Feat
