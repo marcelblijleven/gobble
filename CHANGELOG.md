@@ -1,3 +1,9 @@
+## 0.6.0 (2024-06-01)
+
+### Feat
+
+- **tasks**: add endpoint to view tasks
+
 ## 0.5.0 (2024-06-01)
 
 ### Feat
