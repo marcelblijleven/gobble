@@ -1,3 +1,5 @@
+import os
+
 from pydantic import BaseModel, Field
 from pydantic_settings import (
     BaseSettings,
@@ -9,6 +11,8 @@ from pydantic_settings import (
 
 from gobble.discord.config import DiscordSettings
 from gobble.plex.config import PlexSettings
+
+CONFIG_FILE = os.getenv("GOBBLE_CONFIG", "gobble.yaml")
 
 
 class Tasks(BaseModel):
@@ -26,7 +30,7 @@ class Settings(BaseSettings):
         default_factory=Tasks, description="Collection of webhook tasks to register"
     )
 
-    model_config = SettingsConfigDict(yaml_file="gobble.yaml")
+    model_config = SettingsConfigDict(yaml_file=CONFIG_FILE)
 
     @classmethod
     def settings_customise_sources(
