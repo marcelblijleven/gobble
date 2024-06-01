@@ -1,3 +1,9 @@
+## 0.6.1 (2024-06-01)
+
+### Fix
+
+- **settings**: allow for override of gobble.yaml location
+
 ## 0.6.0 (2024-06-01)
 
 ### Feat
