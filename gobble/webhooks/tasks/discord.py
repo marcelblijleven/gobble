@@ -2,7 +2,8 @@ import asyncio
 import logging
 from enum import IntEnum
 
-from gobble.config import settings
+from pydantic import AnyHttpUrl, AnyUrl, Field
+
 from gobble.discord.client import call_webhook
 from gobble.discord.models import (
     DiscordWebhookBody,
@@ -10,10 +11,19 @@ from gobble.discord.models import (
     EmbedObject,
 )
 from gobble.webhooks.event_types import EventType
+from gobble.webhooks.tasks.models import BaseTask
 from gobble.webhooks.tasks.registry import register_webhook_task
 from gobble.webhooks.webhook import MediaType, WebhookEvent
 
 logger = logging.getLogger(__name__)
+
+
+class DiscordSettings(BaseTask):
+    webhook_url: AnyHttpUrl = Field(...)
+    username: str | None = Field(
+        "Gobble", description="The username to use in the webhook"
+    )
+    avatar_url: AnyUrl | None = Field(None)
 
 
 class Colors(IntEnum):
@@ -153,6 +163,7 @@ async def call_discord_webhook(event: WebhookEvent) -> None:
     Returns:
         Nothing
     """
+    from gobble.config import settings
 
     if not settings.tasks.discord:
         return

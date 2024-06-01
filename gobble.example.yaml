@@ -6,11 +6,13 @@ plex:
 tasks:
   logger: true
   discord:
-    - webhook_url: https://discord.foo/foo
+    - name: Test link
+      webhook_url: https://discord.foo/foo
       event_types:
         - media_scrobble
         - media_rate
       username: Gobble
-    - webhook_url: https://discord.com/bar
+    - name: Test link
+      webhook_url: https://discord.com/bar
       event_types: all
       username: Gobble

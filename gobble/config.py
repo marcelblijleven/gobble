@@ -7,8 +7,8 @@ from pydantic_settings import (
     YamlConfigSettingsSource,
 )
 
-from gobble.discord.config import DiscordSettings
 from gobble.plex.config import PlexSettings
+from gobble.webhooks.tasks.discord import DiscordSettings
 
 
 class Tasks(BaseModel):
