@@ -10,3 +10,8 @@ class BaseTask(BaseModel):
     event_types: list[EventType] | Literal["all"] = Field(
         "all", description="On which event types to call the webhook"
     )
+
+
+class ComplexTask(BaseModel):
+    name: str
+    tasks: list[BaseTask] = Field(default_factory=list, description="List of tasks")

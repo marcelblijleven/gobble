@@ -11,6 +11,7 @@ from pydantic_settings import (
 
 from gobble.plex.config import PlexSettings
 from gobble.webhooks.tasks.discord import DiscordSettings
+from gobble.webhooks.tasks.homeassistant import HomeassistantSettings
 
 CONFIG_FILE = os.getenv("GOBBLE_CONFIG", "gobble.yaml")
 
@@ -19,6 +20,10 @@ class Tasks(BaseModel):
     logger: bool | None = Field(True)
     discord: list[DiscordSettings] = Field(
         default_factory=list, description="Discord task settings"
+    )
+    homeassistant: HomeassistantSettings | None = Field(
+        None,
+        description="Homeassistant task settings",
     )
 
 
