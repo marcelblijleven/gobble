@@ -1,3 +1,9 @@
+## 0.7.0 (2024-06-05)
+
+### Feat
+
+- **homeassistant**: add homeassistant task
+
 ## 0.6.2 (2024-06-01)
 
 ### Fix
