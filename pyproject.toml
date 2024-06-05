@@ -23,6 +23,7 @@ commitizen = "^3.26.0"
 pytest-asyncio = "^0.23.7"
 mypy = "^1.10.0"
 ruff = "^0.4.5"
+respx = "^0.21.1"
 
 [tool.commitizen]
 version_provider = "poetry"
